@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "PhishGuard \u2014 Email, Link & Download Protection",
+  "version": "1.4.0",
+  "description": "PhishGuard with configurable CSV website blocklists, link checks, and download protection.",
+  "action": {
+    "default_title": "PhishGuard",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "declarativeNetRequest",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*"
+  ],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "content/gmail.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "dashboard.html",
+    "open_in_tab": true
+  }
+}

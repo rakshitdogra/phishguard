@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PhishGuard · CSV Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="brandmark">⬡</div>
+    <div><p class="eyebrow">PHISHGUARD EXTENSION</p><h1>CSV blocklist dashboard</h1><p class="sub">Manage multiple local CSV sources that block matching websites before they load.</p></div>
+  </header>
+  <main>
+    <section class="card enable-card">
+      <div><h2>Website blocking</h2><p>When enabled, matching top-level website navigations are blocked by Chrome. Rules are stored locally in this browser.</p></div>
+      <button id="toggleBlocking" class="primary">Enable CSV blocking</button>
+      <p id="blockingStatus" class="status" role="status" aria-live="polite"></p>
+    </section>
+    <section class="card">
+      <div class="section-head"><div><h2>Add CSV sources</h2><p>Each CSV contains only links. Choose whether that source is a whitelist or blacklist before importing.</p></div><a class="template" href="sample-blocklist.csv" download>Download sample CSV</a></div>
+      <label class="mode-field" for="importMode">Type for the CSV file(s) you are adding<select id="importMode"><option value="blacklist">Blacklist — block links in this CSV</option><option value="whitelist">Whitelist — allow links in this CSV</option></select></label>
+      <label class="dropzone" for="csvFiles"><span class="upload-icon">＋</span><strong>Select one or more CSV files</strong><span>One link per row, one column only. Up to 4,500 combined rules. CSV is parsed locally and not uploaded.</span><input id="csvFiles" type="file" accept=".csv,text/csv" multiple></label>
+      <p class="hint">CSV format: one column containing full URLs, one link per row. A header named <code>link</code> or <code>url</code> is optional. Set whitelist/blacklist for each source in this dashboard.</p>
+      <p id="importStatus" class="status" role="status" aria-live="polite"></p>
+    </section>
+    <section class="card">
+      <div class="section-head"><div><h2>Your blocklist sources</h2><p id="sourceCount">No CSV sources imported yet.</p></div><button id="refreshRules" class="secondary">Refresh blocking rules</button></div>
+      <div id="sourceList" class="source-list"><div class="empty">Import a CSV to add your first source.</div></div>
+    </section>
+    <section class="card">
+      <div class="section-head"><div><h2>URL tracker cleaning</h2><p>Remove common advertising and analytics parameters from links when clicked. Cleaning happens locally in your browser.</p></div></div>
+      <div class="settings-row"><div><strong>Enable URL sanitization</strong><p class="hint">Cleans known tracking parameters such as utm_*, fbclid, gclid, msclkid and common analytics IDs before a link opens.</p></div><button id="toggleSanitization" class="primary">Enable URL sanitization</button></div>
+      <p id="sanitizationStatus" class="status" role="status" aria-live="polite"></p>
+      <label class="mode-field" for="sanitizationWhitelist">Websites exempt from sanitization</label>
+      <textarea id="sanitizationWhitelist" rows="5" spellcheck="false" placeholder="example.com&#10;docs.example.org"></textarea>
+      <p class="hint">Enter one domain per line. A listed domain is exempt when it is the page you click from or the destination of the link. Subdomains are included. Keep this list small and trusted.</p>
+      <button id="saveSanitizationWhitelist" class="secondary">Save sanitization exceptions</button>
+      <p id="whitelistStatus" class="status" role="status" aria-live="polite"></p>
+    </section>
+    <section class="card">
+      <h2>Test a website against your CSVs</h2>
+      <p>Checks your imported local lists without contacting the backend.</p>
+      <form id="testForm" class="test-row"><input id="testUrl" type="url" placeholder="https://example.com" required><button class="primary" type="submit">Test URL</button></form>
+      <div id="testResult" class="test-result" role="status" aria-live="polite"></div>
+    </section>
+    <section class="card note"><h2>CSV format</h2><p>Each row contains only one link. No action, reason, or domain columns are needed.</p><pre>link
+https://fake-login.example/
+https://example.org/download</pre><p class="hint"><strong>Blacklist:</strong> listed links are blocked. <strong>Whitelist:</strong> listed links are treated as allowed exceptions to CSV blacklist rules. A whitelist does not block every website that is absent from it. Use trusted lists; incorrect entries can affect browsing.</p></section>
+  </main>
+  <script src="dashboard.js"></script>
+</body>
+</html>

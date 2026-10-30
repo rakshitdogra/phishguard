@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PhishGuard</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+<header class="top"><div class="mark">⬡</div><div><h1>PhishGuard</h1><p>Email, link & download protection</p></div><span class="tag">MV3</span></header>
+<div class="mode"><span class="pulse"></span><span id="modeLabel">Backend not configured</span></div>
+<section class="panel"><h2>Backend connection</h2><label for="backendUrl">PhishGuard backend URL</label><input id="backendUrl" type="url" placeholder="https://your-phishguard.example.com" autocomplete="url"><p class="hint">Use your deployed backend URL or http://localhost:3000. API keys stay on the backend.</p><button id="saveBackend" class="secondary full">Save & authorize backend</button><div id="connectionStatus" class="status" aria-live="polite"></div></section>
+<section class="panel"><h2>Scan this website</h2><p class="hint">Checks the current page URL against your enabled CSV rules and PhishGuard's backend. It does not submit page contents or open links.</p><button id="scanPage" class="primary full">Scan current website</button><button id="openDashboard" class="secondary full">Manage CSV blocklists</button><button id="toggleProtection" class="secondary full">Enable download & hover protection on all websites</button><div id="pageResult" class="result hidden" aria-live="polite"></div></section>
+<section class="panel"><h2>Scan an email</h2><p class="hint">Open an email in Gmail and click <b>Scan with PhishGuard</b>. Detected attachments are checked automatically when Gmail exposes a downloadable file.</p><div id="emailResult" class="result hidden" aria-live="polite"></div></section>
+<footer>Website protection is opt-in and can be disabled here.</footer><script src="popup.js"></script></body></html>
